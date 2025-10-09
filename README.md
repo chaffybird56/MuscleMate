@@ -33,7 +33,7 @@ u_i[n] = (1-\alpha)\,u_i[n-1] + \alpha\,\lvert x_i[n]\rvert \,, \qquad
 \alpha = 1 - e^{-2\pi f_c/f_s}.
 $$
 
-- $f_c$ is a small cutoff (about $3$–$6$ Hz).  
+- $f_c$ is a small cutoff (about 3-6 Hz).  
 - Intuition: this is a moving average of the absolute EMG, so momentary spikes don’t cause false triggers.
 
 ### 2) Put everyone on the same scale (z‑score)
