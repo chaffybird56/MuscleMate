@@ -43,6 +43,18 @@ https://github.com/user-attachments/assets/dcc49717-62b0-4c19-89aa-dea88fd53750
 
 ---
 
+## ⚡ Quick Overview
+
+1. Flex a muscle → two EMG channels capture the activity.  
+2. Signal cleaning yields a smooth strength value (the envelope).  
+3. Dual thresholds with hysteresis decide on/off to avoid chatter.  
+4. Debounce, cooldown, and long-press logic produce stable intents.  
+5. The robot executes a safe sequence: select bin → approach → grip → lift → autoclave → place → close → home.
+
+That’s the loop: **muscle → intent → motion** until the instrument is safely sterilized.
+
+---
+
 ## 🚀 Quick Start
 
 ### 1. Setup
@@ -181,6 +193,16 @@ Unit tests validate gesture decoding (debounce, cooldown, long-press) and determ
 
 ---
 
+## 🧪 What You Should See
+
+- Reliable pick/place of mock instruments into the autoclave (sim + hardware).  
+- Long-press abort always returns to **home**.  
+- Stable control thanks to the envelope, hysteresis, and debounce stages.
+
+**Limitations.** EMG varies day-to-day; revisit thresholds periodically. The autoclave door dwell is simulated in the stub implementation. Expanding the gesture set will require additional channels or a classifier.
+
+---
+
 ## 🛠️ Extending MuscleMate
 - Add new intents by expanding `Intent` and updating the transition logic in `state_machine.py`.
 - Integrate real EMG hardware by implementing `EMGReader`.
@@ -209,3 +231,4 @@ Unit tests validate gesture decoding (debounce, cooldown, long-press) and determ
 
 ## 📜 License
 MIT — see `LICENSE`.
+
