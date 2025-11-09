@@ -9,7 +9,7 @@ from enum import Enum, auto
 from time import time
 from typing import List, Optional
 
-from ..config import Thresholds
+from .config import Thresholds
 
 
 class Intent(Enum):

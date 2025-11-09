@@ -1,6 +1,6 @@
 import time
 
-from musclemate.sim import ScriptedEMGSource
+from sim import ScriptedEMGSource
 
 
 def test_scripted_emg_cycles_segments(monkeypatch):
@@ -8,12 +8,12 @@ def test_scripted_emg_cycles_segments(monkeypatch):
     source = ScriptedEMGSource(segments, repeat=False)
 
     base = time.time()
-    monkeypatch.setattr("musclemate.sim.emg_profiles.time", lambda: base)
+    monkeypatch.setattr("sim.emg_profiles.time", lambda: base)
     assert source.read() == (1.0, 0.0)
 
-    monkeypatch.setattr("musclemate.sim.emg_profiles.time", lambda: base + 0.11)
+    monkeypatch.setattr("sim.emg_profiles.time", lambda: base + 0.11)
     assert source.read() == (0.0, 1.0)
 
-    monkeypatch.setattr("musclemate.sim.emg_profiles.time", lambda: base + 0.25)
+    monkeypatch.setattr("sim.emg_profiles.time", lambda: base + 0.25)
     assert source.read() == (0.0, 1.0)
 

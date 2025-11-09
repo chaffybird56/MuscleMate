@@ -9,10 +9,10 @@ from enum import Enum, auto
 from time import sleep
 from typing import Optional, Tuple
 
-from ..config import Speeds, Thresholds, Waypoints
-from ..hardware.arm import ArmInterface
-from ..hardware.emg import EMGReader
-from ..utils import clamp
+from .config import Speeds, Thresholds, Waypoints
+from hardware.arm import ArmInterface
+from hardware.emg import EMGReader
+from .utils import clamp
 from .gesture import GestureDecoder, Intent
 
 

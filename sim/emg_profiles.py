@@ -9,7 +9,7 @@ from itertools import cycle
 from time import time
 from typing import Iterable, Iterator, List, Sequence, Tuple
 
-from ..hardware.emg import EMGReader
+from hardware.emg import EMGReader
 
 
 @dataclass

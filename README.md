@@ -13,7 +13,7 @@ https://github.com/user-attachments/assets/dcc49717-62b0-4c19-89aa-dea88fd53750
 
 ## 🌟 Highlights
 - Modular Python package (`musclemate/`) with clean separation of **hardware adapters**, **gesture decoding**, **control logic**, and **simulated EMG** feeds.
-- Command line interface (`musclemate.cli`) for live runs or scripted demos—no need to touch application code.
+- Command line interface (`control.cli`) for live runs or scripted demos—no need to touch application code.
 - Configuration via dataclasses with sensible defaults for thresholds, waypoints, speeds, and loop timing.
 - Test suite (`tests/`) covering gesture decoding logic and scripted EMG playback.
 - Packaging metadata (`pyproject.toml`) for `pip install .` deployment.
@@ -23,20 +23,21 @@ https://github.com/user-attachments/assets/dcc49717-62b0-4c19-89aa-dea88fd53750
 ## 🗂️ Project Overview
 
 ```
-├── musclemate/
+├── control/
+│   ├── __init__.py
 │   ├── cli.py                # CLI entry point
-│   ├── config.py             # Dataclass configs (thresholds, sampling, waypoints, speeds)
-│   ├── control/
-│   │   ├── gesture.py        # Debounce + hysteresis + intent decoding
-│   │   ├── runner.py         # Main loop orchestrator
-│   │   └── state_machine.py  # Finite-state workflow for sterilization
-│   ├── hardware/
-│   │   ├── arm.py            # Arm interface + QArm stub
-│   │   └── emg.py            # EMG reader protocol + static source
-│   ├── sim/
-│   │   └── emg_profiles.py   # Scripted EMG scenarios for demos and tests
-│   └── utils.py              # Shared helpers
-├── surgical.robotic_arm.py   # Legacy entry point -> delegates to package CLI
+│   ├── config.py             # Dataclass configs and timing
+│   ├── gesture.py            # Debounce + hysteresis + intent decoding
+│   ├── runner.py             # Main loop orchestrator
+│   ├── state_machine.py      # Finite-state workflow for sterilization
+│   └── utils.py              # Shared helpers (clamp, etc.)
+├── hardware/
+│   ├── __init__.py
+│   ├── arm.py                # Arm interface + QArm stub
+│   └── emg.py                # EMG reader protocol + static source
+├── sim/
+│   ├── __init__.py
+│   └── emg_profiles.py       # Scripted EMG scenarios for demos and tests
 ├── tests/                    # Pytest-based unit tests
 └── pyproject.toml            # Packaging metadata
 ```
@@ -67,13 +68,14 @@ pip install .
 
 ### 2. Run the scripted demo
 ```bash
-python -m musclemate.cli --demo
+python -m control.cli --demo
+# or simply: musclemate --demo   # after installing the console script
 ```
 - Uses a deterministic EMG script to exercise the full sterilization cycle.
 - Logs intents/state transitions while the stub arm tracks pose updates.
 
 ### 3. Connect your hardware
-Replace `QArmStub` and `StaticEMGSource` with your Quanser QArm / biosignal bindings by subclassing the `ArmInterface` and `EMGReader` protocols in `musclemate.hardware`.
+Replace `QArmStub` and `StaticEMGSource` with your Quanser QArm / biosignal bindings by subclassing the `ArmInterface` and `EMGReader` protocols in `hardware`.
 
 ---
 
@@ -81,14 +83,14 @@ Replace `QArmStub` and `StaticEMGSource` with your Quanser QArm / biosignal bind
 
 | Parameter | Location | Purpose |
 | --- | --- | --- |
-| `Thresholds` | `musclemate.config` | EMG on/off thresholds, debounce, cooldown, long-press abort |
-| `Waypoints` | `musclemate.config` | Bin/autoclave/home coordinates |
-| `Speeds` | `musclemate.config` | Motion profile speeds & gripper dwell |
-| `Sampling` | `musclemate.config` | Runtime and loop rate defaults |
+| `Thresholds` | `control.config` | EMG on/off thresholds, debounce, cooldown, long-press abort |
+| `Waypoints` | `control.config` | Bin/autoclave/home coordinates |
+| `Speeds` | `control.config` | Motion profile speeds & gripper dwell |
+| `Sampling` | `control.config` | Runtime and loop rate defaults |
 
 Override values at runtime with CLI flags, e.g.:
 ```bash
-python -m musclemate.cli --emg-on 0.7 --cooldown 0.4 --loop-rate 60
+python -m control.cli --emg-on 0.7 --cooldown 0.4 --loop-rate 60
 ```
 
 ---
@@ -187,7 +189,7 @@ Unit tests validate gesture decoding (debounce, cooldown, long-press) and determ
 
 ### Hardware-in-the-loop (HIL) smoke test
 - Connect your EMG acquisition and arm bindings.
-- Run `python -m musclemate.cli --loop-rate 60 --runtime 30` to exercise the loop at control-rate.
+- Run `python -m control.cli --loop-rate 60 --runtime 30` to exercise the loop at control-rate.
 - Monitor logs for state transitions; abort safely with a long press.
 - Add assertions around `ControllerEvent` streams to automate pass/fail checks.
 

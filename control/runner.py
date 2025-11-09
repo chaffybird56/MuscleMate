@@ -7,7 +7,7 @@ from __future__ import annotations
 from time import sleep, time
 from typing import Optional, Protocol
 
-from ..config import Sampling
+from .config import Sampling
 from .state_machine import ControllerEvent, SterilizationController
 
 

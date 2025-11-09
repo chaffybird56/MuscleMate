@@ -11,11 +11,11 @@ from dataclasses import replace
 from typing import Optional
 
 from .config import Sampling, Speeds, Thresholds, Waypoints
-from .control.runner import run_controller
-from .control.state_machine import SterilizationController
-from .hardware.arm import ArmInterface, QArmStub
-from .hardware.emg import EMGReader, StaticEMGSource
-from .sim import scripted_cycle
+from .runner import run_controller
+from .state_machine import SterilizationController
+from hardware.arm import ArmInterface, QArmStub
+from hardware.emg import EMGReader, StaticEMGSource
+from sim import scripted_cycle
 
 LOGGER = logging.getLogger("musclemate")
 
