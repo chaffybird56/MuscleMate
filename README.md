@@ -1,4 +1,4 @@
-# 🦾 MuscleMate — Myoelectric Robotic Sterilization Helper
+## 🦾 MuscleMate — Myoelectric Robotic Sterilization Helper
 
 Myoelectric signals from your forearm drive a robot arm that shuttles surgical instruments into an autoclave with deterministic, safe motion primitives.  
 
