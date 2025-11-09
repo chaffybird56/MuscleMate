@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "musclemate"
+version = "0.1.0"
+description = "Myoelectric-controlled robotic arm workflow for surgical sterilization."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+authors = [
+  {name = "MuscleMate Contributors"}
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+  "Topic :: Scientific/Engineering :: Human Machine Interfaces",
+  "Topic :: Scientific/Engineering :: Medical Science Apps."
+]
+dependencies = [
+]
+
+[project.scripts]
+musclemate = "musclemate.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["musclemate*"]
+
