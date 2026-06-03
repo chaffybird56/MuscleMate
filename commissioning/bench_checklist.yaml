@@ -1,0 +1,28 @@
+# Technician bench commissioning — complete before integration rig handoff
+schema_version: "1.0"
+project: MuscleMate
+phase: bench
+
+checks:
+  - id: PWR-01
+    item: Drive power interlock reads OK (24V rail, fuse continuity)
+    required: true
+  - id: ESTOP-01
+    item: E-stop latches motion; clear only with technician key
+    required: true
+  - id: IO-01
+    item: Door/gripper safeguarding inputs match wiring diagram
+    required: true
+  - id: MOT-01
+    item: Bench motion probe completes (scripts/bench_commission.py)
+    required: true
+  - id: SEQ-01
+    item: manufacturing_validation sequence passes with interlocks armed
+    required: true
+  - id: DOC-01
+    item: Sign-off recorded in docs/INTEGRATION_HANDOFF.md
+    required: true
+
+signoff:
+  field: signoff_id
+  example: "BENCH-2026-0603-AHMAD"
