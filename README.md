@@ -55,6 +55,8 @@ Long-press on channel 2 triggers **ABORT**(E-stop latch + home). Details: [safet
 
 ## Signal processing
 
+Full chain, noise margins, and false-trigger budget: **[docs/signal_chain.md](docs/signal_chain.md)**.
+
 Let $x_i[n]$ be raw EMG on channel $i \in \{1,2\}$ at sample rate $f_s$.
 
 **Envelope**(rectify + low-pass):
@@ -97,13 +99,17 @@ Calibrate from a rest capture: set $\theta_{\text{on}}$ near the 95th percentile
 
 | Doc | Contents |
 |-----|----------|
+| [docs/signal_chain.md](docs/signal_chain.md) | Acquisition → intent path, noise, false-trigger budget |
+| [docs/power_budget.md](docs/power_budget.md) | 24 V rail draw, duty cycle, loop energy |
+| [hardware/front_end_bench.md](hardware/front_end_bench.md) | Differential front-end, scope bring-up |
 | [docs/BUILD_INSTRUCTIONS.md](docs/BUILD_INSTRUCTIONS.md) | Install, verify, manufacturing runs |
 | [docs/BENCH_COMMISSIONING.md](docs/BENCH_COMMISSIONING.md) | Technician bench steps |
 | [docs/INTEGRATION_HANDOFF.md](docs/INTEGRATION_HANDOFF.md) | Cross-functional handoff |
 | [docs/SAFETY_INTERLOCK_MATRIX.md](docs/SAFETY_INTERLOCK_MATRIX.md) | Interlocks & duty-cycle policy |
 | [commissioning/bench_checklist.yaml](commissioning/bench_checklist.yaml) | Bench sign-off checklist |
+| [bench_logs/threshold_sweep_summary.csv](bench_logs/threshold_sweep_summary.csv) | R&D threshold sweep results |
 
-**Layout:** `control/` · `hardware/adapters/` · `safety/` · `sequences/` · `scripts/` · `sim/` · `tests/`
+**Layout:** `control/` · `hardware/` · `safety/` · `sequences/` · `scripts/` · `sim/` · `tests/` · `bench_logs/`
 
 Production hardware: swap stubs in `hardware/adapters/integration_rig.py` for QArm / biosignal bindings.
 
