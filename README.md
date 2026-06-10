@@ -1,4 +1,4 @@
-## 🦾 MuscleMate — Myoelectric Robotic Sterilization Helper
+## MuscleMate — Myoelectric Robotic Sterilization Helper
 
 Myoelectric signals from your forearm drive a robot arm that shuttles surgical instruments into an autoclave with deterministic, safe motion primitives.
 
@@ -12,10 +12,10 @@ https://github.com/user-attachments/assets/dcc49717-62b0-4c19-89aa-dea88fd53750
 
 ## Highlights
 
-- **Safety & duty cycles** — interlocks, E-stop, deterministic motion ([safety matrix](docs/SAFETY_INTERLOCK_MATRIX.md))
-- **Bench → integration** — modular adapters and technician commissioning ([bench guide](docs/BENCH_COMMISSIONING.md))
-- **Motion sequences & handoff** — versioned Python sequences, build steps, partner docs ([build](docs/BUILD_INSTRUCTIONS.md) · [handoff](docs/INTEGRATION_HANDOFF.md))
-- **Muscle → intent → motion** — EMG gesture decode + sterilization FSM (`control/`)
+- **Safety & duty cycles**— interlocks, E-stop, deterministic motion ([safety matrix](docs/SAFETY_INTERLOCK_MATRIX.md))
+- **Bench → integration**— modular adapters and technician commissioning ([bench guide](docs/BENCH_COMMISSIONING.md))
+- **Motion sequences & handoff**— versioned Python sequences, build steps, partner docs ([build](docs/BUILD_INSTRUCTIONS.md) · [handoff](docs/INTEGRATION_HANDOFF.md))
+- **Muscle → intent → motion**— EMG gesture decode + sterilization FSM (`control/`)
 
 ---
 
@@ -42,14 +42,14 @@ Tune thresholds via CLI (`--emg-on`, `--cooldown`, `--loop-rate`, etc.) — defa
 
 ## How it works
 
-**Loop:** EMG → envelope → hysteresis → intent → guarded FSM → arm.
+**Loop:**EMG → envelope → hysteresis → intent → guarded FSM → arm.
 
 ```
 IDLE → SELECT_BIN → APPROACH → GRIP → LIFT → TRANSIT
-     → OPEN_AUTOCLAVE → PLACE → CLOSE_AUTOCLAVE → HOME
+ → OPEN_AUTOCLAVE → PLACE → CLOSE_AUTOCLAVE → HOME
 ```
 
-Long-press on channel 2 triggers **ABORT** (E-stop latch + home). Details: [safety matrix](docs/SAFETY_INTERLOCK_MATRIX.md).
+Long-press on channel 2 triggers **ABORT**(E-stop latch + home). Details: [safety matrix](docs/SAFETY_INTERLOCK_MATRIX.md).
 
 ---
 
@@ -57,20 +57,20 @@ Long-press on channel 2 triggers **ABORT** (E-stop latch + home). Details: [safe
 
 Let $x_i[n]$ be raw EMG on channel $i \in \{1,2\}$ at sample rate $f_s$.
 
-**Envelope** (rectify + low-pass):
+**Envelope**(rectify + low-pass):
 
 $$
 u_i[n] = (1-\alpha)u_i[n-1] + \alpha |x_i[n]|,\qquad
 \alpha = 1 - e^{-2\pi f_c/f_s}.
 $$
 
-**Normalize** (rest baseline $\mu_i$, $\sigma_i$):
+**Normalize**(rest baseline $\mu_i$, $\sigma_i$):
 
 $$
 z_i[n] = \frac{u_i[n] - \mu_i}{\sigma_i}.
 $$
 
-**Hysteresis** ($\theta_{\text{on}} > \theta_{\text{off}}$):
+**Hysteresis**($\theta_{\text{on}} > \theta_{\text{off}}$):
 
 $$
 c_i[n] =
@@ -80,7 +80,7 @@ c_i[n] =
 \end{cases}
 $$
 
-**Debounce** $T_d$, **cooldown** $T_c$ after each intent; **long-press** $T_\ell \approx 1.2\,\mathrm{s}$ on ch2 → ABORT.
+**Debounce**$T_d$, **cooldown**$T_c$ after each intent; **long-press**$T_\ell \approx 1.2\,\mathrm{s}$ on ch2 → ABORT.
 
 | Symbol | Typical |
 |--------|---------|
